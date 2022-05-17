@@ -187,6 +187,7 @@ def _plot_ef(ef, ef_param, ef_param_range, ax, show_assets):
                     param_value
                 )
             )
+            continue
 
         ret, sigma, _ = ef.portfolio_performance()
         mus.append(ret)
