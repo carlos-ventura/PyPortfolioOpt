@@ -8,6 +8,7 @@ import warnings
 import numpy as np
 import pandas as pd
 import cvxpy as cp
+from cvxpy.atoms.affine.wraps import psd_wrap
 
 from .. import exceptions
 from .. import objective_functions, base_optimizer
@@ -248,7 +249,7 @@ class EfficientFrontier(base_optimizer.BaseConvexOptimizer):
 
         # max_sharpe requires us to make a variable transformation.
         # Here we treat w as the transformed variable.
-        self._objective = cp.quad_form(self._w, self.cov_matrix)
+        self._objective = cp.quad_form(self._w, psd_wrap(self.cov_matrix))
         k = cp.Variable()
 
         # Note: objectives are not scaled by k. Hence there are subtle differences
