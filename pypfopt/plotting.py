@@ -79,7 +79,7 @@ def plot_covariance(cov_matrix, plot_correlation=False, show_tickers=True, **kwa
 
     _plot_io(**kwargs)
 
-    return ax
+    return matrix
 
 
 def plot_dendrogram(hrp, ax=None, show_tickers=True, **kwargs):
