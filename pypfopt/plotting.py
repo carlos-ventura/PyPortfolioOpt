@@ -38,7 +38,7 @@ def _plot_io(**kwargs):
     showfig = kwargs.get("showfig", False)
     dpi = kwargs.get("dpi", 300)
 
-    plt.tight_layout()
+    # plt.tight_layout()
     if filename:
         plt.savefig(fname=filename, dpi=dpi)
     if showfig:  # pragma: no cover
@@ -203,7 +203,7 @@ def _plot_ef(ef, ef_param, ef_param_range, ax, show_assets):
             color="k",
             label="assets",
         )
-    return ax
+    return ax, mus, sigmas
 
 
 def plot_efficient_frontier(
@@ -246,7 +246,7 @@ def plot_efficient_frontier(
         if ef_param_range is None:
             ef_param_range = _ef_default_returns_range(opt, points)
 
-        ax = _plot_ef(opt, ef_param, ef_param_range, ax=ax, show_assets=show_assets)
+        ax, mus, sigmas = _plot_ef(opt, ef_param, ef_param_range, ax=ax, show_assets=show_assets)
     else:
         raise NotImplementedError("Please pass EfficientFrontier or CLA object")
 
@@ -255,7 +255,7 @@ def plot_efficient_frontier(
     ax.set_ylabel("Return")
 
     _plot_io(**kwargs)
-    return ax
+    return ax, mus, sigmas
 
 
 def plot_weights(weights, ax=None, **kwargs):
