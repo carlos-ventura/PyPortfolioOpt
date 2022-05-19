@@ -155,7 +155,7 @@ def _ef_default_returns_range(ef, points):
     ef_maxret = copy.deepcopy(ef)
 
     ef_minvol.min_volatility()
-    min_ret = ef_minvol.portfolio_performance()[0]
+    min_ret = max(ef_minvol.portfolio_performance()[0], 0)
     max_ret = ef_maxret._max_return()
     return np.linspace(min_ret, max_ret - 0.0001, points)
 
