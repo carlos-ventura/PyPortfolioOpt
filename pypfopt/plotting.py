@@ -194,8 +194,10 @@ def _plot_ef(ef, ef_param, ef_param_range, ax, show_assets):
         sigmas.append(sigma)
 
     ax.plot(sigmas, mus, label="Efficient frontier")
-
+    assets = {}
     if show_assets:
+        assets['sigmas'] = np.sqrt(np.diag(ef.cov_matrix))
+        assets['mus'] = ef.expected_returns
         ax.scatter(
             np.sqrt(np.diag(ef.cov_matrix)),
             ef.expected_returns,
@@ -203,7 +205,7 @@ def _plot_ef(ef, ef_param, ef_param_range, ax, show_assets):
             color="k",
             label="assets",
         )
-    return ax, mus, sigmas
+    return ax, mus, sigmas, assets
 
 
 def plot_efficient_frontier(
@@ -246,7 +248,7 @@ def plot_efficient_frontier(
         if ef_param_range is None:
             ef_param_range = _ef_default_returns_range(opt, points)
 
-        ax, mus, sigmas = _plot_ef(opt, ef_param, ef_param_range, ax=ax, show_assets=show_assets)
+        ax, mus, sigmas, assets = _plot_ef(opt, ef_param, ef_param_range, ax=ax, show_assets=show_assets)
     else:
         raise NotImplementedError("Please pass EfficientFrontier or CLA object")
 
@@ -255,7 +257,7 @@ def plot_efficient_frontier(
     ax.set_ylabel("Return")
 
     _plot_io(**kwargs)
-    return ax, mus, sigmas
+    return ax, mus, sigmas, assets
 
 
 def plot_weights(weights, ax=None, **kwargs):
